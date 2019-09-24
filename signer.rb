@@ -16,7 +16,7 @@ class Signer
     signature = ca_key.sign(digest, csr.to_der)
 
     # TODO: Manage serial number generation.
-    serial_number = OpenSSL::ASN1::Integer.new(1, 2)
+    serial_number = OpenSSL::ASN1::Integer.new(16019012157061550576, 2)
     signing_alg = OpenSSL::ASN1::Sequence.new(
       [
         OpenSSL::ASN1::ObjectId.new("RSA-SHA256", 6),
@@ -26,8 +26,8 @@ class Signer
     issuer = ca_asn.value[0].value[4]
     validity = OpenSSL::ASN1::Sequence.new(
       [
-        OpenSSL::ASN1::UTCTime.new(Time.utc(2019, 9, 24, 13, 0, 0), 23),
-        OpenSSL::ASN1::UTCTime.new(Time.utc(2020, 9, 24, 13, 0, 0), 23)
+        OpenSSL::ASN1::UTCTime.new(Time.utc(2019, 9, 24, 14, 25, 23), 23),
+        OpenSSL::ASN1::UTCTime.new(Time.utc(2021, 2, 5, 14, 25, 23), 23)
       ]
     )
     subject = csr_asn.value[0].value[1]
@@ -50,6 +50,6 @@ class Signer
 
     File.open("output.der", "wb") { |file| file.write signed_cert.to_der }
 
-    return signed_cert
+    signed_cert
   end
 end
