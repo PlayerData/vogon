@@ -1,0 +1,66 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 2.5.3
+  Exclude:
+    - bin/*
+    - bundle/**/*
+    - db/schema.rb
+    - db/schemas/*.rb
+
+Rails:
+  Enabled: true
+
+Rails/UnknownEnv:
+  Environments:
+    - development
+    - production
+    - staging
+    - test
+
+Metrics/AbcSize:
+  Exclude:
+    - spec/**/*_spec.rb
+
+Metrics/BlockLength:
+  Exclude:
+    - config/routes.rb
+    - Guardfile
+    - spec/**/*_spec.rb
+    - spec/**/shared_examples/*.rb
+    - spec/factories/**/*.rb
+
+Metrics/MethodLength:
+  Exclude:
+    - db/migrate/*.rb
+
+Metrics/LineLength:
+  Max: 120
+
+Naming/FileName:
+  Exclude:
+    - app/graphql/types/ISO8601_date.rb
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Layout/AlignHash:
+  EnforcedLastArgumentHashStyle: ignore_implicit
+
+Style/Documentation:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/Lambda:
+  EnforcedStyle: literal
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/SymbolProc:
+  Exclude:
+    - db/migrate/*.rb
