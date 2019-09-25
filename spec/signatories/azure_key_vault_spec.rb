@@ -11,7 +11,7 @@ RSpec.describe Vogon::Signatories::AzureKeyVault, :vcr do
       certificate_name: "vogon-test",
       tenant_id: "73081428-e0d9-4468-ad4c-c89aec3a6f35",
       client_id: ENV["AZURE_KEY_VAULT_CLIENT_ID"],
-      client_secret: ENV["AZURE_KEY_VAULT_CLIENT_SECRET"],
+      client_secret: ENV["AZURE_KEY_VAULT_CLIENT_SECRET"]
     )
   end
 

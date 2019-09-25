@@ -30,7 +30,7 @@ module Vogon
 
     def to_cert
       Vogon::Containers::Certificate.new(
-        serial_number: 16_019_012_157_061_550_576,
+        serial_number: Time.now.utc.to_i,
         signing_alg: "RSA-SHA256",
         validity: { from: valid_from, to: valid_to },
         subject: csr.subject,
