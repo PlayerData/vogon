@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 RSpec.describe Signer do
-  it "signs the certificate" do
+  it "signs a CSR" do
     ca_cert = OpenSSL::X509::Certificate.new(File.read(fixture("ca.crt")))
+    signatory = Signer::Signatories::Local.new(fixture("ca.key"), fixture("ca.crt"))
 
-    output_der = Signer.sign(fixture("example.csr"), fixture("ca.key"), fixture("ca.crt"))
+    output_der = Signer.sign(fixture("example.csr"), signatory)
     output_cert = OpenSSL::X509::Certificate.new(output_der)
 
     expect(output_cert.verify(ca_cert.public_key))
