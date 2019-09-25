@@ -17,8 +17,4 @@ RSpec.describe Signer do
       "/C=GB/ST=Edinburgh/L=Edinburgh/O=PlayerData Ltd/CN=signer-test-ca/emailAddress=dev@playerdata.co.uk"
     )
   end
-
-  def fixture(path)
-    File.join(__dir__, "fixtures/#{path}")
-  end
 end
