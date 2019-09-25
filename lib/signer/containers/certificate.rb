@@ -8,8 +8,16 @@ module Signer
         asn = OpenSSL::ASN1.decode(ossl_crt)
 
         new(
+          serial_number: asn.value[0].value[0].value,
+          signing_alg: asn.value[0].value[1].value[0].value,
+          issuer: asn.value[0].value[2],
+          validity: {
+            from: asn.value[0].value[3].value[0].value,
+            to: asn.value[0].value[3].value[1].value
+          },
           subject: asn.value[0].value[4],
-          signature: asn.value[2]
+          subject_public_key: asn.value[0].value[5],
+          signature: asn.value[2].value
         )
       end
 
@@ -29,6 +37,10 @@ module Signer
 
       def to_der
         to_asn.to_der
+      end
+
+      def to_pem
+        OpenSSL::X509::Certificate.new(to_der).to_pem
       end
 
       private

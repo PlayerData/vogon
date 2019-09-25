@@ -3,6 +3,7 @@ PATH
   specs:
     signer (0.0.1)
       httparty (~> 0.17.1)
+      sinatra (~> 2.0.7)
 
 GEM
   remote: https://rubygems.org/
@@ -22,10 +23,16 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2019.0904)
     multi_xml (0.6.0)
+    mustermann (1.0.3)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     public_suffix (4.0.1)
+    rack (2.0.7)
+    rack-protection (2.0.7)
+      rack
+    rack-test (1.1.0)
+      rack (>= 1.0, < 3)
     rake (10.5.0)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
@@ -41,6 +48,13 @@ GEM
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
     safe_yaml (1.0.5)
+    sinatra (2.0.7)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.7)
+      tilt (~> 2.0)
+    tilt (2.0.10)
+    timecop (0.9.1)
     vcr (5.0.0)
     webmock (3.7.5)
       addressable (>= 2.3.6)
@@ -53,9 +67,11 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.17)
   pry (~> 0.12.2)
+  rack-test (~> 1.1.0)
   rake (~> 10.0)
   rspec (~> 3.0)
   signer!
+  timecop (~> 0.9.1)
   vcr (~> 5.0.0)
   webmock (~> 3.7.5)
 

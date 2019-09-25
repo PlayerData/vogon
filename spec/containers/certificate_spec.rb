@@ -20,4 +20,10 @@ RSpec.describe Signer::Containers::Certificate do
 
     expect(signer_cert.to_der).to eq example_asn.to_der
   end
+
+  it "converts to pem" do
+    expect(
+      Signer::Containers::Certificate.from_bytes(File.read(fixture("ca.crt"))).to_pem
+    ).to eq File.read(fixture("ca.crt"))
+  end
 end

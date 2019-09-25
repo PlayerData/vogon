@@ -11,10 +11,14 @@ require "signer/signatories/azure_key_vault"
 require "signer/version"
 
 module Signer
-  def self.sign(csr_file, signatory)
-    csr = Signer::Containers::Request.new File.read csr_file
+  DAY_SECONDS = 86_400
+
+  def self.sign(csr, signatory, valid_days)
+    csr = Signer::Containers::Request.new csr
 
     signature = signatory.sign(csr)
+    valid_from = Time.now.utc
+    valid_to = valid_from + (valid_days * Signer::DAY_SECONDS)
 
     # TODO: Manage serial number generation.
     Signer::Containers::Certificate.new(
@@ -22,8 +26,8 @@ module Signer
       signing_alg: "RSA-SHA256",
       issuer: signatory.issuer,
       validity: {
-        from: Time.utc(2019, 9, 24, 14, 25, 23),
-        to: Time.utc(2021, 2, 5, 14, 25, 23)
+        from: valid_from,
+        to: valid_to
       },
       subject: csr.subject,
       subject_public_key: csr.subject_public_key,
