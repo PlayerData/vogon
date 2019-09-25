@@ -8,7 +8,7 @@ RSpec.describe "/sign" do
   let(:ca_cert) { OpenSSL::X509::Certificate.new(File.read(fixture("ca.crt"))) }
 
   before do
-    ENV["SIGNER_SERVER_CONFIG"] = fixture("server_config.yml")
+    ENV["VOGON_SERVER_CONFIG"] = fixture("server_config.yml")
   end
 
   it "signs a CSR using the local signatory" do

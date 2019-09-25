@@ -27,7 +27,7 @@ module Vogon
     private
 
     def settings_file
-      @settings_file ||= YAML.load_file(ENV["SIGNER_SERVER_CONFIG"])
+      @settings_file ||= YAML.load_file(ENV["VOGON_SERVER_CONFIG"])
     end
 
     def signatory

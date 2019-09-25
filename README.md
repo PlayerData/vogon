@@ -32,7 +32,45 @@ Currently only Azure Key Vault is supported, along with a Local signatory for te
 
 ## Server Usage
 
-TODO
+### Running
+
+Create a `config.ru`:
+
+```
+require 'vogon/server'
+run Vogon::Server
+```
+
+Use a rack web server to boot the app:
+
+```
+puma config.ru
+```
+
+### Config
+
+You must set the VOGON_SERVER_CONFIG environment variable to point to a valid config file.
+
+The vogon config file looks something like this:
+
+```yml
+# vogon.yml
+
+
+:signatories:
+  # Local:
+  #   :ca_key_file: spec/fixtures/ca.key
+  #   :ca_cert_file: spec/fixtures/ca.crt
+
+  AzureKeyVault:
+    :base_url: https://vault-name.vault.azure.net
+    :certificate_name: cert-name
+    :tenant_id: tenant-id
+```
+
+### The API
+
+
 
 ## Gem Usage
 
