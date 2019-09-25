@@ -31,8 +31,6 @@ class Signer
       signature: signature
     )
 
-    File.open("/tmp/output.der", "wb") { |file| file.write signed_cert.to_der }
-
     signed_cert
   end
 end

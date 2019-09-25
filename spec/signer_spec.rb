@@ -2,10 +2,10 @@
 
 RSpec.describe Signer do
   it "signs the certificate" do
-    Signer.sign(fixture("example.csr"), fixture("ca.key"), fixture("ca.crt"))
-
     ca_cert = OpenSSL::X509::Certificate.new(File.read(fixture("ca.crt")))
-    output_cert = OpenSSL::X509::Certificate.new(File.read("/tmp/output.der"))
+
+    output_der = Signer.sign(fixture("example.csr"), fixture("ca.key"), fixture("ca.crt"))
+    output_cert = OpenSSL::X509::Certificate.new(output_der)
 
     expect(output_cert.verify(ca_cert.public_key))
 
