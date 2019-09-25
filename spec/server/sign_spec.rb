@@ -55,9 +55,21 @@ RSpec.describe "/sign" do
     expect(output_cert.not_after).to eq Time.utc(2019, 12, 24, 13, 27, 43)
   end
 
-  it "fails if days > 180"
+  it "fails if days > 180" do
+    csr = File.read(fixture("example.csr"))
+    post "/sign?signatory=Local&days=181", csr
 
-  it "fails if the signatory is not whitelisted"
+    expect(last_response.status).to eq 422
+    expect(last_response.body).to eq "{\"errors\":{\"valid_days\":\"must be less than 180\"}}"
+  end
+
+  it "fails if the signatory is not whitelisted" do
+    csr = File.read(fixture("example.csr"))
+    post "/sign?signatory=SomethingElse&days=181", csr
+
+    expect(last_response.status).to eq 422
+    expect(last_response.body).to eq "{\"errors\":{\"signatory\":\"is not available\"}}"
+  end
 
   def app
     Signer::Server

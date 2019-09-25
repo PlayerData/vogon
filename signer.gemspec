@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "activemodel"
   spec.add_dependency "activesupport"
   spec.add_dependency "httparty", "~> 0.17.1"
   spec.add_dependency "sinatra", "~> 2.0.7"

@@ -7,14 +7,20 @@ require "sinatra/base"
 module Signer
   class Server < Sinatra::Base
     post "/sign" do
-      signatory_name = params[:signatory]
-      signatory_class = Signer::Signatories.const_get(signatory_name)
+      if signatory.nil?
+        status 422
+        return { errors: { signatory: "is not available" } }.to_json
+      end
 
-      signatory = signatory_class.new(signatory_settings(signatory_name))
+      csr = Signer::Containers::Request.new request.body.read.to_s
+      request = Signer::SigningRequest.new(csr, params[:days].to_i)
 
-      csr = request.body.read.to_s
+      if request.invalid?
+        status 422
+        return { errors: request.errors.to_h }.to_json
+      end
 
-      crt = Signer.sign(csr, signatory, params[:days].to_i)
+      crt = request.sign(signatory)
       crt.to_pem
     end
 
@@ -22,6 +28,16 @@ module Signer
 
     def settings_file
       @settings_file ||= YAML.load_file(ENV["SIGNER_SERVER_CONFIG"])
+    end
+
+    def signatory
+      enabled_signatories = settings_file[:signatories].keys
+      signatory_name = params[:signatory]
+
+      return nil unless enabled_signatories.include?(signatory_name)
+
+      signatory_class = Signer::Signatories.const_get(signatory_name)
+      signatory_class.new(signatory_settings(signatory_name))
     end
 
     def signatory_settings(signatory_name)

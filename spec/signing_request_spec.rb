@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
-RSpec.describe Signer do
+RSpec.describe Signer::SigningRequest do
   it "signs a CSR" do
     ca_cert = OpenSSL::X509::Certificate.new(File.read(fixture("ca.crt")))
     signatory = Signer::Signatories::Local.new(
       ca_key_file: fixture("ca.key"), ca_cert_file: fixture("ca.crt")
     )
 
-    output_der = Signer.sign(File.read(fixture("example.csr")), signatory, 180)
+    csr = Signer::Containers::Request.new File.read(fixture("example.csr"))
+    request = Signer::SigningRequest.new(csr, 180)
+
+    output_der = request.sign(signatory)
     output_cert = OpenSSL::X509::Certificate.new(output_der)
 
     expect(output_cert.verify(ca_cert.public_key))
@@ -19,5 +22,13 @@ RSpec.describe Signer do
     expect(output_cert.issuer.to_s).to eq(
       "/C=GB/ST=Edinburgh/L=Edinburgh/O=PlayerData Ltd/CN=signer-test-ca/emailAddress=dev@playerdata.co.uk"
     )
+  end
+
+  it "validates that the length is not more than 180 days" do
+    csr = Signer::Containers::Request.new File.read(fixture("example.csr"))
+    request = Signer::SigningRequest.new(csr, 181)
+
+    expect(request).to be_invalid
+    expect(request.errors[:valid_days]).to include "must be less than 180"
   end
 end
