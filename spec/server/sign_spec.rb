@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "signer/server"
+require "vogon/server"
 
 RSpec.describe "/sign" do
   include Rack::Test::Methods
@@ -72,6 +72,6 @@ RSpec.describe "/sign" do
   end
 
   def app
-    Signer::Server
+    Vogon::Server
   end
 end

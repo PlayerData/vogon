@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    signer (0.0.1)
+    vogon (0.0.1)
       activemodel
       activesupport
       httparty (~> 0.17.1)
@@ -88,9 +88,9 @@ DEPENDENCIES
   rack-test (~> 1.1.0)
   rake (~> 10.0)
   rspec (~> 3.0)
-  signer!
   timecop (~> 0.9.1)
   vcr (~> 5.0.0)
+  vogon!
   webmock (~> 3.7.5)
 
 BUNDLED WITH

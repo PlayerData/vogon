@@ -2,16 +2,16 @@
 
 lib = File.expand_path("lib", __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "signer/version"
+require "vogon/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "signer"
-  spec.version       = Signer::VERSION
+  spec.name          = "vogon"
+  spec.version       = Vogon::VERSION
   spec.authors       = ["PlayerData Ltd"]
   spec.email         = ["dev@playerdata.co.uk"]
 
   spec.summary       = "Remote signing of certificates using 'Cloud Key Management Solutions'"
-  spec.homepage      = "https://github.com/PlayerData/signer"
+  spec.homepage      = "https://github.com/PlayerData/vogon"
   spec.license       = "MIT"
 
   # Specify which files should be added to the gem when it is released.

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe Signer::Signatories::Local do
+RSpec.describe Vogon::Signatories::Local do
   subject(:signatory) do
-    Signer::Signatories::Local.new(
+    Vogon::Signatories::Local.new(
       ca_key_file: fixture("ca.key"),
       ca_cert_file: fixture("ca.crt")
     )
@@ -15,7 +15,7 @@ RSpec.describe Signer::Signatories::Local do
   end
 
   it "signs a CSR" do
-    csr = Signer::Containers::Request.new File.read(fixture("example.csr"))
+    csr = Vogon::Containers::Request.new File.read(fixture("example.csr"))
 
     expect(Base64.encode64(signatory.sign(csr))).to eq(
       <<~SIGNATURE

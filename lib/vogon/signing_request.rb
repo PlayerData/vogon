@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Signer
+module Vogon
   class SigningRequest
     include ActiveModel::Validations
 
@@ -29,7 +29,7 @@ module Signer
     private
 
     def to_cert
-      Signer::Containers::Certificate.new(
+      Vogon::Containers::Certificate.new(
         serial_number: 16_019_012_157_061_550_576,
         signing_alg: "RSA-SHA256",
         validity: { from: valid_from, to: valid_to },

@@ -4,7 +4,7 @@ require "active_support/inflector"
 
 require "sinatra/base"
 
-module Signer
+module Vogon
   class Server < Sinatra::Base
     post "/sign" do
       if signatory.nil?
@@ -12,8 +12,8 @@ module Signer
         return { errors: { signatory: "is not available" } }.to_json
       end
 
-      csr = Signer::Containers::Request.new request.body.read.to_s
-      request = Signer::SigningRequest.new(csr, params[:days].to_i)
+      csr = Vogon::Containers::Request.new request.body.read.to_s
+      request = Vogon::SigningRequest.new(csr, params[:days].to_i)
 
       if request.invalid?
         status 422
@@ -36,7 +36,7 @@ module Signer
 
       return nil unless enabled_signatories.include?(signatory_name)
 
-      signatory_class = Signer::Signatories.const_get(signatory_name)
+      signatory_class = Vogon::Signatories.const_get(signatory_name)
       signatory_class.new(signatory_settings(signatory_name))
     end
 

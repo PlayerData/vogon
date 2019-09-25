@@ -2,13 +2,13 @@
 
 require "base64"
 
-RSpec.describe Signer::Signatories::AzureKeyVault, :vcr do
+RSpec.describe Vogon::Signatories::AzureKeyVault, :vcr do
   let(:ca_cert) { OpenSSL::X509::Certificate.new File.read(fixture("ca.crt")) }
 
   subject(:signatory) do
-    Signer::Signatories::AzureKeyVault.new(
-      base_url: "https://signer-development.vault.azure.net",
-      certificate_name: "signer-test",
+    Vogon::Signatories::AzureKeyVault.new(
+      base_url: "https://vogon-development.vault.azure.net",
+      certificate_name: "vogon-test",
       tenant_id: "73081428-e0d9-4468-ad4c-c89aec3a6f35",
       client_id: ENV["AZURE_KEY_VAULT_CLIENT_ID"],
       client_secret: ENV["AZURE_KEY_VAULT_CLIENT_SECRET"],
@@ -24,7 +24,7 @@ RSpec.describe Signer::Signatories::AzureKeyVault, :vcr do
   end
 
   it "signs a CSR" do
-    csr = Signer::Containers::Request.new File.read(fixture("example.csr"))
+    csr = Vogon::Containers::Request.new File.read(fixture("example.csr"))
 
     expect(Base64.encode64(signatory.sign(csr))).to eq(
       <<~SIGNATURE

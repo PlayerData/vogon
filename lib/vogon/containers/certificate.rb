@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Signer
+module Vogon
   module Containers
     class Certificate
       def self.from_bytes(bytes)

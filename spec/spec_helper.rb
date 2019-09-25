@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "bundler/setup"
-require "signer"
+require "vogon"
 
 ENV["RACK_ENV"] = "test"
 

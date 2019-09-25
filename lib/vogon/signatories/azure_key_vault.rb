@@ -2,7 +2,7 @@
 
 require "httparty"
 
-module Signer
+module Vogon
   module Signatories
     class AzureKeyVault
       include HTTParty
@@ -23,7 +23,7 @@ module Signer
           headers: { Authorization: "Bearer #{access_token}" }
         )
 
-        Signer::Containers::Certificate.from_bytes Base64.urlsafe_decode64(response["cer"])
+        Vogon::Containers::Certificate.from_bytes Base64.urlsafe_decode64(response["cer"])
       end
 
       def issuer

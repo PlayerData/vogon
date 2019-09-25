@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-RSpec.describe Signer::SigningRequest do
+RSpec.describe Vogon::SigningRequest do
   it "signs a CSR" do
     ca_cert = OpenSSL::X509::Certificate.new(File.read(fixture("ca.crt")))
-    signatory = Signer::Signatories::Local.new(
+    signatory = Vogon::Signatories::Local.new(
       ca_key_file: fixture("ca.key"), ca_cert_file: fixture("ca.crt")
     )
 
-    csr = Signer::Containers::Request.new File.read(fixture("example.csr"))
-    request = Signer::SigningRequest.new(csr, 180)
+    csr = Vogon::Containers::Request.new File.read(fixture("example.csr"))
+    request = Vogon::SigningRequest.new(csr, 180)
 
     output_der = request.sign(signatory)
     output_cert = OpenSSL::X509::Certificate.new(output_der)
@@ -25,8 +25,8 @@ RSpec.describe Signer::SigningRequest do
   end
 
   it "validates that the length is not more than 180 days" do
-    csr = Signer::Containers::Request.new File.read(fixture("example.csr"))
-    request = Signer::SigningRequest.new(csr, 181)
+    csr = Vogon::Containers::Request.new File.read(fixture("example.csr"))
+    request = Vogon::SigningRequest.new(csr, 181)
 
     expect(request).to be_invalid
     expect(request.errors[:valid_days]).to include "must be less than 180"
