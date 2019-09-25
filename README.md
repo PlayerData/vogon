@@ -1,34 +1,62 @@
 # Vogon
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/vogon`. To experiment with that code, run `bin/console` for an interactive prompt.
+This is Vogon, a gem and lightweight HTTP server to allow signing of
+Certificate Signing Requests (CSRs) with remote certificates.
 
-TODO: Delete this and the text above, and describe your gem
+Caution: Vogon is very much alpha level software. Use at your own risk.
 
-## Installation
+## Why?
 
-Add this line to your application's Gemfile:
+At PlayerData, we need our own PKI for signing embedded device software updates.
+We want to keep our root certificate somewhere nice and secure, and use more disposable
+and short-lived certificates for signing update packages.
 
-```ruby
-gem 'vogon'
+Many cloud providers provide a certificate management solution of some variety
+(e.g. Azure Key Vault, Google Cloud Key Management Service, Amazon Key Management Service, etc).
+For reasons we don't understand, most aren't able to act as a certificate authority (i.e. they
+don't provide the ability to sign a CSR).
+(Amazon KMS does, but for $$$).
+
+Vogon takes a CSR, constructs a new certificate to be signed, sends it off to your chosen
+signatory to be signed, and returns a certificate.
+
+## What Vogon Doesn't Do
+
+All of the complex things around being a CA, e.g:
+* certificate revocation lists
+* certificate transparency
+
+## Supported Signatories
+
+Currently only Azure Key Vault is supported, along with a Local signatory for testing purposes.
+
+## Server Usage
+
+TODO
+
+## Gem Usage
+
+```rb
+signatory = Vogon::Signatories::AzureKeyVault.new(
+  base_url: "https://vault-name.vault.azure.net",
+  certificate_name: "cert-name",
+  tenant_id: "tennant-id",
+  client_id: ENV["AZURE_KEY_VAULT_CLIENT_ID"],
+  client_secret: ENV["AZURE_KEY_VAULT_CLIENT_SECRET"],
+)
+
+# or
+
+signatory = Vogon::Signatories::Local.new(
+  ca_key_file: "ca.key", ca_cert_file: "ca.crt"
+)
+
+csr = Vogon::Containers::Request.new File.read("example.csr")
+request = Vogon::SigningRequest.new(csr, params[:days].to_i)
+
+crt = request.sign(signatory)
+crt.to_pem
 ```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install vogon
-
-## Usage
-
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
@@ -41,3 +69,8 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of Conduct
 
 Everyone interacting in the Vogon project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/vogon/blob/master/CODE_OF_CONDUCT.md).
+
+## Why Vogon?
+
+This entire process seems somewhat bureaucratic.
+As such, the project is named after the Vogons - the galactic government's bureaucrats.
