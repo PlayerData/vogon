@@ -9,12 +9,12 @@ module Signer
 
       attr_accessor :base_url, :certificate_name, :tenant_id, :client_id, :client_secret
 
-      def initialize
-        self.base_url = ENV["AZURE_KEY_VAULT_BASE_URL"]
-        self.certificate_name = ENV["AZURE_KEY_VAULT_CERTIFICATE_NAME"]
-        self.tenant_id = ENV["AZURE_TENANT_ID"]
-        self.client_id = ENV["AZURE_CLIENT_ID"]
-        self.client_secret = ENV["AZURE_CLIENT_SECRET"]
+      def initialize(base_url:, certificate_name:, tenant_id:, client_id:, client_secret:)
+        self.base_url = base_url
+        self.certificate_name = certificate_name
+        self.tenant_id = tenant_id
+        self.client_id = client_id
+        self.client_secret = client_secret
       end
 
       def ca_certificate

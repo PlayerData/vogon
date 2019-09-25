@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe Signer::Signatories::Local do
-  subject(:signatory) { Signer::Signatories::Local.new(fixture("ca.key"), fixture("ca.crt")) }
+  subject(:signatory) do
+    Signer::Signatories::Local.new(
+      ca_key_file: fixture("ca.key"),
+      ca_cert_file: fixture("ca.crt")
+    )
+  end
 
   it "gets the issuer name" do
     ca_cert = OpenSSL::X509::Certificate.new File.read(fixture("ca.crt"))

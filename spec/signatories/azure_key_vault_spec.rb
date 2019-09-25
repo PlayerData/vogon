@@ -3,8 +3,17 @@
 require "base64"
 
 RSpec.describe Signer::Signatories::AzureKeyVault, :vcr do
-  subject(:signatory) { Signer::Signatories::AzureKeyVault.new }
   let(:ca_cert) { OpenSSL::X509::Certificate.new File.read(fixture("ca.crt")) }
+
+  subject(:signatory) do
+    Signer::Signatories::AzureKeyVault.new(
+      base_url: "https://signer-development.vault.azure.net",
+      certificate_name: "signer-test",
+      tenant_id: "73081428-e0d9-4468-ad4c-c89aec3a6f35",
+      client_id: ENV["AZURE_KEY_VAULT_CLIENT_ID"],
+      client_secret: ENV["AZURE_KEY_VAULT_CLIENT_SECRET"],
+    )
+  end
 
   it "fetches the CA certificate" do
     expect(signatory.ca_certificate.subject.to_der).to eq ca_cert.subject.to_der

@@ -1,0 +1,10 @@
+
+:signatories:
+  Local:
+    :ca_key_file: spec/fixtures/ca.key
+    :ca_cert_file: spec/fixtures/ca.crt
+
+  AzureKeyVault:
+    :base_url: https://signer-development.vault.azure.net
+    :certificate_name: signer-test
+    :tenant_id: 73081428-e0d9-4468-ad4c-c89aec3a6f35

@@ -3,6 +3,8 @@
 require "bundler/setup"
 require "signer"
 
+ENV["RACK_ENV"] = "test"
+
 Dir[File.join(__dir__, "support", "**", "*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
