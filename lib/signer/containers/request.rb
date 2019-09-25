@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Signer
+module Signer
   module Containers
     class Request
       def initialize(bytes)

@@ -7,7 +7,7 @@ require "signer/containers/certificate"
 require "signer/containers/request"
 require "signer/version"
 
-class Signer
+module Signer
   def self.sign(csr_file, ca_key_file, ca_cert_file)
     csr = Signer::Containers::Request.new File.read csr_file
 

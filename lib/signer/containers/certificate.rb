@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Signer
+module Signer
   module Containers
     class Certificate
       def self.from_bytes(bytes)
