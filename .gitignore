@@ -1,9 +1,3 @@
-*.crt
-*.csr
-*.der
-*.key
-*.pem
-
 /.bundle/
 /.yardoc
 /_yardoc/
