@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "./signer"
-
 RSpec.describe Signer do
   it "signs the certificate" do
     Signer.sign

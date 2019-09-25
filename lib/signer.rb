@@ -3,6 +3,8 @@
 require "openssl"
 require "pry"
 
+require "signer/version"
+
 class Signer
   def self.sign
     csr = OpenSSL::X509::Request.new File.read "example.csr"
