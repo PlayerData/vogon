@@ -1,11 +1,16 @@
 # frozen_string_literal: true
 
-RSpec.describe Signer::Signatories::Local do
-  subject(:signatory) { Signer::Signatories::Local.new(fixture("ca.key"), fixture("ca.crt")) }
+require "base64"
+
+RSpec.describe Signer::Signatories::AzureKeyVault, :vcr do
+  subject(:signatory) { Signer::Signatories::AzureKeyVault.new }
+  let(:ca_cert) { OpenSSL::X509::Certificate.new File.read(fixture("ca.crt")) }
+
+  it "fetches the CA certificate" do
+    expect(signatory.ca_certificate.subject.to_der).to eq ca_cert.subject.to_der
+  end
 
   it "gets the issuer name" do
-    ca_cert = OpenSSL::X509::Certificate.new File.read(fixture("ca.crt"))
-
     expect(signatory.issuer.to_der).to eq ca_cert.subject.to_der
   end
 

@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
+require "base64"
 require "openssl"
 require "pry"
 
 require "signer/containers/certificate"
 require "signer/containers/request"
 require "signer/signatories/local"
+require "signer/signatories/azure_key_vault"
 require "signer/version"
 
 module Signer

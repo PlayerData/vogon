@@ -1,0 +1,110 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://login.microsoftonline.com/73081428-e0d9-4468-ad4c-c89aec3a6f35/oauth2/token
+    body:
+      encoding: UTF-8
+      string: "--------------------------gyUHYPQ8Hatpv2MN\r\nContent-Disposition:
+        form-data; name=\"client_id\"\r\n\r\n<CLIENT_ID>\r\n--------------------------gyUHYPQ8Hatpv2MN\r\nContent-Disposition:
+        form-data; name=\"client_secret\"\r\n\r\n<CLIENT_SECRET>\r\n--------------------------gyUHYPQ8Hatpv2MN\r\nContent-Disposition:
+        form-data; name=\"grant_type\"\r\n\r\nclient_credentials\r\n--------------------------gyUHYPQ8Hatpv2MN\r\nContent-Disposition:
+        form-data; name=\"resource\"\r\n\r\nhttps://vault.azure.net\r\n--------------------------gyUHYPQ8Hatpv2MN--\r\n"
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - multipart/form-data; boundary=------------------------gyUHYPQ8Hatpv2MN
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store
+      Pragma:
+      - no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Expires:
+      - "-1"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - a60c15b5-2a80-49bb-ada0-14dd132c1800
+      X-Ms-Ests-Server:
+      - 2.1.9395.17 - DUB2 ProdSlices
+      P3p:
+      - CP="DSP CUR OTPi IND OTRi ONL FIN"
+      Set-Cookie:
+      - fpc=AupZ_7E5ZPtMm7IFvOztNDOahw62AQAAAHZEHdUOAAAA; expires=Fri, 25-Oct-2019
+        11:20:23 GMT; path=/; secure; HttpOnly
+      - stsservicecookie=ests; path=/; secure; HttpOnly
+      - x-ms-gateway-slice=prod; path=/; secure; HttpOnly
+      Date:
+      - Wed, 25 Sep 2019 11:20:22 GMT
+      Content-Length:
+      - '1324'
+    body:
+      encoding: UTF-8
+      string: '{"token_type":"Bearer","expires_in":"3599","ext_expires_in":"3599","expires_on":"1569414023","not_before":"1569410123","resource":"https://vault.azure.net","access_token":"<ACCESS_TOKEN>"}'
+    http_version: 
+  recorded_at: Wed, 25 Sep 2019 11:20:23 GMT
+- request:
+    method: post
+    uri: https://signer-development.vault.azure.net/keys/signer-test/sign?api-version=7.0
+    body:
+      encoding: UTF-8
+      string: '{"alg":"RS256","value":"D-MUXEux-z6vjyrghfhTLOoxMyIXwovxlRdNVeSzoaw="}'
+    headers:
+      Authorization:
+      - "<ACCESS_TOKEN>"
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Pragma:
+      - no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Expires:
+      - "-1"
+      Server:
+      - Microsoft-IIS/10.0
+      X-Ms-Keyvault-Region:
+      - uksouth
+      X-Ms-Request-Id:
+      - 456b682c-0160-4690-981b-cfe7210b47ef
+      X-Ms-Keyvault-Service-Version:
+      - 1.1.0.878
+      X-Ms-Keyvault-Network-Info:
+      - addr=92.238.112.65;act_addr_fam=InterNetwork;
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Strict-Transport-Security:
+      - max-age=31536000;includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Wed, 25 Sep 2019 11:20:22 GMT
+      Content-Length:
+      - '455'
+    body:
+      encoding: UTF-8
+      string: '{"kid":"https://signer-development.vault.azure.net/keys/signer-test/89b9ebebec474ba9b5b9d451c283e315","value":"AJguY4sRE8MCTR1mnnlPc2tWub_GyaNMcoc_vnPEcDiDLzVKaZALEef9RxxK7031BjDOaljqgkKgeHjF1qyHoDgd5KlJyrYK4J53iTyLkkQNAhUgsVuHARsv9xVbz5CBin3wNgY3JRIWMe2neU37n23k4CnOMUZUvLGuziSnPAXkyZFQmmCZh_UJMu04dtiHTbIziSBclJmKIRvAv_ksY-3OdC3kCklcojWTihTjmr2hSXW-VW6GbZSMwmSWA6mZTDWIH4dWINpzv25jiFo1rJWEfDqdSLIJIxJil6ycJlFAK1q0o1qAHq-GRJ20nSH1lc-7CxB27B8332IRrV0MeQ"}'
+    http_version: 
+  recorded_at: Wed, 25 Sep 2019 11:20:23 GMT
+recorded_with: VCR 5.0.0
