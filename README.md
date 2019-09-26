@@ -56,7 +56,6 @@ The vogon config file looks something like this:
 ```yml
 # vogon.yml
 
-
 :signatories:
   # Local:
   #   :ca_key_file: spec/fixtures/ca.key
@@ -65,12 +64,59 @@ The vogon config file looks something like this:
   AzureKeyVault:
     :base_url: https://vault-name.vault.azure.net
     :certificate_name: cert-name
-    :tenant_id: tenant-id
 ```
+
+Config can also be set as URL parameters when using the API.
+Config in `vogon.yaml` takes precedence over URL parameters
+
+Config options:
+
+| Local Signatory | | |
+|-----------------|-|-|
+| ca_key_file     | required | Path to the key file associated with the CA's certificate |
+| ca_cert_file    | required | Path to the CA's certificate                              |
+
+| Azure Key Vault Signatory | | |
+|---------------------------|-|-|
+| base_url                  | required | Base URL for the vault |
+| certificate_name          | required | Name of the certificate within the vault to be used as a CA. It's assumed that its associated key has the same name |
+| tenant_id                 | optional | Tenant ID for the Azure Active Directory we're authenticating against. Required if `access_token` is not specified
+| client_id                 | optional | Client ID for the Service Principle being used for authentication. Required if `access_token` is not specified
+| client_secret             | optional | Client ID for the Service Principle being used for authentication. Required if `access_token` is not specified
+| access_token              | optional | The access token to be used to access AKV. May be omitted if `tenant_id`, `client_id` and `client_secret` are specified, in which case Vogon will perform the OAuth2 dance for you.
 
 ### The API
 
+Vogon Server has a single POST endpoint, `/sign`.
 
+The following URL parameters must be included:
+
+| | |
+|-|-|
+| signatory | One of `Local` or `AzureKeyVault` |
+| days      | The number of days the certificate should be valid for
+
+Config options may be specified as additional URL parameters, prefixed by the signatory name in snakecase.
+
+The request body should be the CSR to be signed.
+
+A successful response will be the signed certificate with status code `200`.
+
+Any other status code should be treated as an error. The response body will be of the form:
+
+```json
+{
+  "errors": {
+    "valid_days": "must be less than 180"
+  }
+}
+```
+
+Example request:
+
+```
+POST /sign?signatory=AzureKeyVault&days=90&azure_key_vault_tenant_id=tenant-id&azure_key_vault_client_id=client-id&azure_key_vault_client_secret=client-secret
+```
 
 ## Gem Usage
 
