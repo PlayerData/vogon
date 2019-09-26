@@ -22,7 +22,7 @@ module Vogon
     def sign(signatory)
       to_cert.tap do |cert|
         cert.issuer = signatory.issuer
-        cert.signature = signatory.sign(csr)
+        cert.signature = signatory.sign(cert.tbs_der)
       end
     end
 

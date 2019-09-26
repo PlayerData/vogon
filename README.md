@@ -136,7 +136,7 @@ signatory = Vogon::Signatories::Local.new(
 )
 
 csr = Vogon::Containers::Request.new File.read("example.csr")
-request = Vogon::SigningRequest.new(csr, params[:days].to_i)
+request = Vogon::SigningRequest.new(csr, 60)
 
 crt = request.sign(signatory)
 crt.to_pem

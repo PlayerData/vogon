@@ -38,8 +38,8 @@ module Vogon
         ca_certificate.subject
       end
 
-      def sign(csr)
-        digest = OpenSSL::Digest::SHA256.new.digest(csr.to_der)
+      def sign(tbs_crt_der)
+        digest = OpenSSL::Digest::SHA256.new.digest(tbs_crt_der)
 
         response = self.class.post(
           "#{base_url}/keys/#{certificate_name}/sign?api-version=7.0",

@@ -14,10 +14,10 @@ module Vogon
         ca_cert.subject
       end
 
-      def sign(csr)
+      def sign(tbs_crt_der)
         digest = OpenSSL::Digest::SHA256.new
 
-        ca_key.sign(digest, csr.to_der)
+        ca_key.sign(digest, tbs_crt_der)
       end
     end
   end

@@ -31,6 +31,10 @@ module Vogon
         end
       end
 
+      def tbs_der
+        tbs_cert_asn.to_der
+      end
+
       def to_asn
         OpenSSL::ASN1::Sequence.new([tbs_cert_asn, signing_alg_asn, signature_asn])
       end

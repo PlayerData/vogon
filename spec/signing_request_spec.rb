@@ -28,6 +28,8 @@ RSpec.describe Vogon::SigningRequest do
     expect(output_cert.serial).to eq 1_569_418_063
     expect(output_cert.not_before).to eq Time.utc(2019, 9, 25, 13, 27, 43)
     expect(output_cert.not_after).to eq Time.utc(2019, 12, 24, 13, 27, 43)
+
+    File.write(fixture("example.crt"), output_cert.to_pem)
   end
 
   it "validates that the length is not more than 180 days" do
