@@ -49,7 +49,7 @@ RSpec.describe Vogon::Signatories::AzureKeyVault, :vcr do
       Vogon::Signatories::AzureKeyVault.new(
         base_url: "https://vogon-development.vault.azure.net",
         certificate_name: "vogon-test",
-        access_token: ENV["AZURE_KEY_VAULT_ACCESS_TOKEN"]
+        access_token: ENV["AZURE_KEY_VAULT_ACCESS_TOKEN"] || "<ACCESS_TOKEN>"
       )
     end
 
