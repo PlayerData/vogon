@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ParameterLists
+
 require "httparty"
 
 module Vogon
@@ -9,12 +11,18 @@ module Vogon
 
       attr_accessor :base_url, :certificate_name, :tenant_id, :client_id, :client_secret
 
-      def initialize(base_url:, certificate_name:, tenant_id:, client_id:, client_secret:)
+      def initialize(
+        base_url:, certificate_name:, access_token: nil,
+        tenant_id: nil, client_id: nil, client_secret: nil
+      )
         self.base_url = base_url
         self.certificate_name = certificate_name
+
         self.tenant_id = tenant_id
         self.client_id = client_id
         self.client_secret = client_secret
+
+        @access_token = access_token
       end
 
       def ca_certificate
@@ -46,19 +54,23 @@ module Vogon
       private
 
       def access_token
-        @access_token ||= begin
-          response = self.class.post(
-            "https://login.microsoftonline.com/#{tenant_id}/oauth2/token",
-            multipart: true,
-            body: {
-              client_id: client_id, client_secret: client_secret,
-              grant_type: "client_credentials", resource: "https://vault.azure.net"
-            }
-          )
+        @access_token ||= fetch_access_token
+      end
 
-          JSON.parse(response.body)["access_token"]
-        end
+      def fetch_access_token
+        response = self.class.post(
+          "https://login.microsoftonline.com/#{tenant_id}/oauth2/token",
+          multipart: true,
+          body: {
+            client_id: client_id, client_secret: client_secret,
+            grant_type: "client_credentials", resource: "https://vault.azure.net"
+          }
+        )
+
+        JSON.parse(response.body)["access_token"]
       end
     end
   end
 end
+
+# rubocop:enable Metrics/ParameterLists
