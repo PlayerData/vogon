@@ -71,6 +71,22 @@ RSpec.describe "/sign" do
     expect(last_response.body).to eq "{\"errors\":{\"signatory\":\"is not available\"}}"
   end
 
+  it "fails helpfully if VOGON_SERVER_CONFIG is not defined" do
+    ENV["VOGON_SERVER_CONFIG"] = nil
+
+    csr = File.read(fixture("example.csr"))
+
+    expect { post "/sign?signatory=Local&days=181", csr }.to raise_error "VOGON_SERVER_CONFIG not set"
+  end
+
+  it "fails helpfully if VOGON_SERVER_CONFIG is not a file" do
+    ENV["VOGON_SERVER_CONFIG"] = "/tmp/noexist"
+
+    csr = File.read(fixture("example.csr"))
+
+    expect { post "/sign?signatory=Local&days=181", csr }.to raise_error "VOGON_SERVER_CONFIG does not exist"
+  end
+
   def app
     Vogon::Server
   end

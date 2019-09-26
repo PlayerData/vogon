@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 require "active_support/inflector"
-
 require "sinatra/base"
+require "yaml"
+
+require "vogon"
 
 module Vogon
   class Server < Sinatra::Base
@@ -27,7 +29,15 @@ module Vogon
     private
 
     def settings_file
-      @settings_file ||= YAML.load_file(ENV["VOGON_SERVER_CONFIG"])
+      @settings_file ||= begin
+        config_file_path = ENV["VOGON_SERVER_CONFIG"]
+
+        raise "VOGON_SERVER_CONFIG not set" if config_file_path.blank?
+
+        YAML.load_file(config_file_path)
+      end
+    rescue Errno::ENOENT
+      raise "VOGON_SERVER_CONFIG does not exist"
     end
 
     def signatory

@@ -2,7 +2,6 @@
 
 require "base64"
 require "openssl"
-require "pry"
 
 require "active_model"
 
