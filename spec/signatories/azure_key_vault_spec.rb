@@ -54,6 +54,18 @@ RSpec.describe Vogon::Signatories::AzureKeyVault, :vcr do
     end
 
     it_behaves_like "Vogon AzureKeyVault Signatory"
+
+    it "raises a sensible error if fetching an access token fails" do
+      signatory = Vogon::Signatories::AzureKeyVault.new(
+        base_url: "https://vogon-development.vault.azure.net",
+        certificate_name: "vogon-test",
+        tenant_id: "73081428-e0d9-4468-ad4c-c89aec3a6f35",
+        client_id: "",
+        client_secret: ""
+      )
+
+      expect { signatory.ca_certificate }.to raise_error.with_message(/"error":"invalid_client"/)
+    end
   end
 
   describe "using access_token" do

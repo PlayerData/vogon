@@ -67,6 +67,8 @@ module Vogon
           }
         )
 
+        raise response.body unless response.ok?
+
         JSON.parse(response.body)["access_token"]
       end
     end

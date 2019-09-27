@@ -1,0 +1,115 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://login.microsoftonline.com/73081428-e0d9-4468-ad4c-c89aec3a6f35/oauth2/token
+    body:
+      encoding: UTF-8
+      string: "<CLIENT_SECRET>\r\nContent-Disposition: form-data; name=\"client_id\"\r\n\r\n\r\n<CLIENT_SECRET>\r\nContent-Disposition:
+        form-data; name=\"client_secret\"\r\n\r\n\r\n<CLIENT_SECRET>\r\nContent-Disposition:
+        form-data; name=\"grant_type\"\r\n\r\nclient_credentials\r\n<CLIENT_SECRET>\r\nContent-Disposition:
+        form-data; name=\"resource\"\r\n\r\nhttps://vault.azure.net\r\n<CLIENT_SECRET>--\r\n"
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - multipart/form-data; boundary=------------------------g-kNl3kgqUv1wm9e
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Cache-Control:
+      - no-cache, no-store
+      Pragma:
+      - no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Expires:
+      - "-1"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 0b7fe7ab-3965-47f6-8b6e-80f0cca34700
+      X-Ms-Ests-Server:
+      - 2.1.9395.17 - DUB2 ProdSlices
+      P3p:
+      - CP="DSP CUR OTPi IND OTRi ONL FIN"
+      Set-Cookie:
+      - fpc=AqEEwgLjTGxInVvexFWHfAs; expires=Sun, 27-Oct-2019 09:30:10 GMT; path=/;
+        secure; HttpOnly
+      - stsservicecookie=ests; path=/; secure; HttpOnly
+      - x-ms-gateway-slice=prod; path=/; secure; HttpOnly
+      Date:
+      - Fri, 27 Sep 2019 09:30:09 GMT
+      Content-Length:
+      - '538'
+    body:
+      encoding: UTF-8
+      string: '{"error":"invalid_client","error_description":"AADSTS7000216: ''client_assertion'',
+        ''client_secret'' or ''request'' is required for the ''client_credentials''
+        grant type.\r\nTrace ID: 0b7fe7ab-3965-47f6-8b6e-80f0cca34700\r\nCorrelation
+        ID: f4538724-cba2-4f07-9e22-4df2f25ab649\r\nTimestamp: 2019-09-27 09:30:10Z","error_codes":[7000216],"timestamp":"2019-09-27
+        09:30:10Z","trace_id":"0b7fe7ab-3965-47f6-8b6e-80f0cca34700","correlation_id":"f4538724-cba2-4f07-9e22-4df2f25ab649","error_uri":"https://login.microsoftonline.com/error?code=7000216"}'
+    http_version: 
+  recorded_at: Fri, 27 Sep 2019 09:30:10 GMT
+- request:
+    method: get
+    uri: https://vogon-development.vault.azure.net/certificates/vogon-test?api-version=7.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - "<ACCESS_TOKEN>"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Cache-Control:
+      - no-cache
+      Pragma:
+      - no-cache
+      Content-Length:
+      - '87'
+      Content-Type:
+      - application/json; charset=utf-8
+      Expires:
+      - "-1"
+      Server:
+      - Microsoft-IIS/10.0
+      Www-Authenticate:
+      - Bearer authorization="https://login.windows.net/73081428-e0d9-4468-ad4c-c89aec3a6f35",
+        resource="https://vault.azure.net"
+      X-Ms-Keyvault-Region:
+      - uksouth
+      X-Ms-Request-Id:
+      - 4ffc146f-993d-4613-95d6-b3d7a3917ff8
+      X-Ms-Keyvault-Service-Version:
+      - 1.1.0.878
+      X-Ms-Keyvault-Network-Info:
+      - addr=193.240.66.150;act_addr_fam=InterNetwork;
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Strict-Transport-Security:
+      - max-age=31536000;includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Fri, 27 Sep 2019 09:30:10 GMT
+    body:
+      encoding: UTF-8
+      string: '{"error":{"code":"Unauthorized","message":"Request is missing a Bearer
+        or PoP token."}}'
+    http_version: 
+  recorded_at: Fri, 27 Sep 2019 09:30:10 GMT
+recorded_with: VCR 5.0.0
