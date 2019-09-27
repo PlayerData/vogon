@@ -31,6 +31,8 @@ module Vogon
           headers: { Authorization: "Bearer #{access_token}" }
         )
 
+        raise response.body unless response.ok?
+
         Vogon::Containers::Certificate.from_bytes Base64.urlsafe_decode64(response["cer"])
       end
 
@@ -47,6 +49,8 @@ module Vogon
           headers: { Authorization: "Bearer #{access_token}", "Content-Type" => "application/json" },
           body: { alg: "RS256", value: Base64.urlsafe_encode64(digest) }.to_json
         )
+
+        raise response.body unless response.ok?
 
         Base64.urlsafe_decode64(response["value"])
       end
