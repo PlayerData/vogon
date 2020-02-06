@@ -74,7 +74,7 @@ GEM
     timecop (0.9.1)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    vcr (5.0.0)
+    vcr (5.1.0)
     webmock (3.8.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -91,7 +91,7 @@ DEPENDENCIES
   rake (~> 13.0)
   rspec (~> 3.0)
   timecop (~> 0.9.1)
-  vcr (~> 5.0.0)
+  vcr (~> 5.1.0)
   vogon!
   webmock (~> 3.8.0)
 
