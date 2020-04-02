@@ -26,15 +26,15 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "activemodel"
   spec.add_dependency "activesupport"
-  spec.add_dependency "httparty", "~> 0.17.1"
+  spec.add_dependency "httparty", ">= 0.17.1", "< 0.19.0"
   spec.add_dependency "sinatra", "~> 2.0.7"
 
   spec.add_development_dependency "bundler", "~> 2.1"
-  spec.add_development_dependency "pry", "~> 0.12.2"
+  spec.add_development_dependency "pry", "~> 0.13.0"
   spec.add_development_dependency "rack-test", "~> 1.1.0"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "timecop", "~> 0.9.1"
-  spec.add_development_dependency "vcr", "~> 5.0.0"
-  spec.add_development_dependency "webmock", "~> 3.7.5"
+  spec.add_development_dependency "vcr", "~> 5.1.0"
+  spec.add_development_dependency "webmock", "~> 3.8.0"
 end
